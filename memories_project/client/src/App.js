@@ -18,36 +18,48 @@ const App = () => {
   }, [dispatch]);
 
   return (
-    <Container maxWidth='lg'>
-      <AppBar className={classes.appBar} position='static' color='inherit'>
-        <Typography className={classes.heading} variant='h2' align='center'>
-          Memories
-        </Typography>
-        <img
-          className={classes.image}
-          src={memories_img}
-          alt='memories'
-          height='60'
-        />
-      </AppBar>
-      <Grow in>
-        <Container>
-          <Grid
-            container
-            justifyContent='space-between'
-            alignItems='stretch'
-            spacing={3}
-          >
-            <Grid item xs={12} sm={7}>
-              <Posts />
+    <>
+      <Container maxWidth='lg'>
+        <AppBar className={classes.appBar} position='static' color='inherit'>
+          <Typography className={classes.heading} variant='h2' align='center'>
+            Memories
+          </Typography>
+          <img
+            className={classes.image}
+            src={memories_img}
+            alt='memories'
+            height='60'
+          />
+        </AppBar>
+        <Grow in>
+          <Container>
+            <Grid
+              container
+              justifyContent='space-between'
+              alignItems='stretch'
+              spacing={3}
+            >
+              <Grid item xs={12} sm={7}>
+                <Posts />
+              </Grid>
+              <Grid item xs={12} sm={4}>
+                <Form />
+              </Grid>
             </Grid>
-            <Grid item xs={12} sm={4}>
-              <Form />
-            </Grid>
-          </Grid>
-        </Container>
-      </Grow>
-    </Container>
+          </Container>
+        </Grow>
+      </Container>
+      <div>
+        {/* Photo by{' '}
+        <a href='https://unsplash.com/@timothyeberly?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText'>
+          Timothy Eberly
+        </a>{' '}
+        on{' '}
+        <a href='https://unsplash.com/?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText'>
+          Unsplash
+        </a> */}
+      </div>
+    </>
   );
 };
 

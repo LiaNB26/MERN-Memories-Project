@@ -3,9 +3,12 @@ import React, { useState } from 'react';
 import { TextField, Button, Typography, Paper } from '@material-ui/core';
 import FileBase from 'react-file-base64';
 import useStyles from './styles.js';
+import { useDispatch } from 'react-redux';
+import { createPost } from '../../redux/actions/postActions.js';
 
 const Form = () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
 
   const [postData, setPostData] = useState({
     creator: '',
@@ -15,7 +18,13 @@ const Form = () => {
     selectedFile: '',
   });
 
-  const handleSubmit = () => {};
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    //need to add validation before sending post data
+    dispatch(createPost(postData));
+    //need to clear post data
+  };
 
   const clearForm = () => {};
 
@@ -45,7 +54,7 @@ const Form = () => {
           variant='outlined'
           label='Title'
           fullWidth
-          value={postData.creator}
+          value={postData.title}
           onChange={(e) => setPostData({ ...postData, title: e.target.value })}
         />
 
@@ -54,7 +63,7 @@ const Form = () => {
           variant='outlined'
           label='Message'
           fullWidth
-          value={postData.creator}
+          value={postData.message}
           onChange={(e) =>
             setPostData({ ...postData, message: e.target.value })
           }
@@ -65,7 +74,7 @@ const Form = () => {
           variant='outlined'
           label='Tags'
           fullWidth
-          value={postData.creator}
+          value={postData.tags}
           onChange={(e) => setPostData({ ...postData, tags: e.target.value })}
         />
 

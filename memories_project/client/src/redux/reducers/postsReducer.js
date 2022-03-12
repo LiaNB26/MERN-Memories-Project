@@ -3,7 +3,7 @@ export default (state = [], action) => {
     case 'GET_ALL_POSTS':
       return action.payload;
     case 'CREATE_POST':
-      return state;
+      return [...state, action.payload];
     default:
       return state;
   }

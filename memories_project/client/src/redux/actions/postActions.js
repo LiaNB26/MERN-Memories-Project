@@ -16,3 +16,15 @@ export const getPosts = () => async (dispatch) => {
     console.log(error.message);
   }
 };
+
+export const createPost = (newPost) => async (dispatch) => {
+  try {
+    const response = await axios.post(url, newPost);
+    const { data } = response;
+    console.log(data);
+
+    dispatch({ type: 'CREATE_POST', payload: data });
+  } catch (error) {
+    console.log(error.message);
+  }
+};
