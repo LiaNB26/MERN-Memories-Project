@@ -13,6 +13,7 @@ export default (state = { posts: [], currentPost: null }, action) => {
         posts: [...state.posts, action.payload],
       };
     case 'UPDATE_POST':
+    case 'LIKE_POST':
       return {
         ...state,
         posts: state.posts.map((post) =>

@@ -48,6 +48,16 @@ export const deletePost = (id) => async (dispatch) => {
   }
 };
 
+export const likePost = (id) => async (dispatch) => {
+  try {
+    const { data } = await axios.patch(`${url}/${id}/likePost`);
+    //console.log(data.message);
+    dispatch({ type: 'LIKE_POST', payload: data });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const setCurrentPost = (currentPost) => (dispatch) => {
   try {
     dispatch({ type: 'SET_CURRENT_POST', payload: currentPost });

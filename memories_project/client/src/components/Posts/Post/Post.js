@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   setCurrentPost,
   deletePost,
+  likePost,
 } from '../../../redux/actions/postActions.js';
 
 import {
@@ -70,19 +71,18 @@ const Post = ({ post }) => {
         {post.title}
       </Typography>
       <CardContent>
-        <Typography
-          variant='h6'
-          //color='textSecondary'
-          gutterBottom
-        >
+        <Typography variant='body2' color='textSecondary' component='p'>
           {post.message}
         </Typography>
       </CardContent>
       <CardActions className={classes.cardActions}>
-        <Button size='small' color='primary' onClick={() => {}}>
+        <Button
+          size='small'
+          color='primary'
+          onClick={() => dispatch(likePost(post._id))}
+        >
           <ThumbUpAltIcon fontSize='small' />
-          Like
-          {/* {post.likeCount} */}
+          Like &nbsp; {post.likeCount}
         </Button>
         <Button
           size='small'
