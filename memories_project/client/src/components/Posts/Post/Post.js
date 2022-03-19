@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setCurrentPost } from '../../../redux/actions/postActions.js';
+import {
+  setCurrentPost,
+  deletePost,
+} from '../../../redux/actions/postActions.js';
 
 import {
   Card,
@@ -16,6 +19,7 @@ import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
 import moment from 'moment';
 
 import useStyles from './styles.js';
+import noImage from '../../../images/no-image.jpg';
 
 const Post = ({ post }) => {
   const classes = useStyles();
@@ -34,7 +38,7 @@ const Post = ({ post }) => {
     <Card className={classes.card}>
       <CardMedia
         className={classes.media}
-        image={post.selectedFile}
+        image={post.selectedFile !== '' ? post.selectedFile : noImage}
         title={post.title}
       />
       <div className={classes.overlay}>
@@ -80,13 +84,19 @@ const Post = ({ post }) => {
           Like
           {/* {post.likeCount} */}
         </Button>
-        {/* <Button size='small' color='secondary' onClick={() => {}}>
+        <Button
+          size='small'
+          color='secondary'
+          onClick={() => dispatch(deletePost(post._id))}
+        >
           <DeleteIcon fontSize='small' />
           Delete
-        </Button> */}
+        </Button>
       </CardActions>
     </Card>
   );
 };
 
 export default Post;
+
+// Photo by <a href="https://unsplash.com/@dariuszsankowski?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Dariusz Sankowski</a> on <a href="https://unsplash.com/?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>

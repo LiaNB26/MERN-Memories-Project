@@ -38,6 +38,16 @@ export const updatePost = (id, updatedPost) => async (dispatch) => {
   }
 };
 
+export const deletePost = (id) => async (dispatch) => {
+  try {
+    const { data } = await axios.delete(`${url}/${id}`);
+    //console.log(data.message);
+    dispatch({ type: 'DELETE_POST', payload: { id } });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const setCurrentPost = (currentPost) => (dispatch) => {
   try {
     dispatch({ type: 'SET_CURRENT_POST', payload: currentPost });

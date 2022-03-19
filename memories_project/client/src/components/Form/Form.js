@@ -37,6 +37,8 @@ const Form = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    console.log(postData);
+
     if (currentPost) {
       dispatch(updatePost(currentPost._id, postData));
     } else {

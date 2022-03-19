@@ -13,12 +13,16 @@ export default (state = { posts: [], currentPost: null }, action) => {
         posts: [...state.posts, action.payload],
       };
     case 'UPDATE_POST':
-      const updatedPosts = state.posts.map((post) =>
-        post._id === action.payload._id ? action.payload : post
-      );
       return {
         ...state,
-        posts: [...updatedPosts],
+        posts: state.posts.map((post) =>
+          post._id === action.payload._id ? action.payload : post
+        ),
+      };
+    case 'DELETE_POST':
+      return {
+        ...state,
+        posts: state.posts.filter((post) => post._id !== action.payload.id),
       };
     case 'SET_CURRENT_POST':
       return {
