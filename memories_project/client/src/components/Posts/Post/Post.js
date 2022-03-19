@@ -1,4 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { setCurrentPost } from '../../../redux/actions/postActions.js';
+
 import {
   Card,
   CardActions,
@@ -16,6 +19,16 @@ import useStyles from './styles.js';
 
 const Post = ({ post }) => {
   const classes = useStyles();
+  const dispatch = useDispatch();
+
+  // const [currentPost, setCurrentPost] = useState(
+  //   useSelector((state) => state.postsReducer.currentPost) || post
+  // );
+
+  const handleSetCurrentId = () => {
+    //setCurrentPost(post);
+    dispatch(setCurrentPost(post));
+  };
 
   return (
     <Card className={classes.card}>
@@ -31,7 +44,11 @@ const Post = ({ post }) => {
         </Typography>
       </div>
       <div className={classes.overlay2}>
-        <Button style={{ color: 'white' }} size='small' onClick={() => {}}>
+        <Button
+          style={{ color: 'white' }}
+          size='small'
+          onClick={() => handleSetCurrentId()}
+        >
           <MoreHorizIcon fontSize='medium' />
         </Button>
       </div>
@@ -40,8 +57,20 @@ const Post = ({ post }) => {
           {post?.tags?.map((tag) => `#${tag} `)}
         </Typography>
       </div>
+      <Typography
+        className={classes.title}
+        variant='h5'
+        //color='textSecondary'
+        gutterBottom
+      >
+        {post.title}
+      </Typography>
       <CardContent>
-        <Typography variant='body2' color='textSecondary' component='p'>
+        <Typography
+          variant='h6'
+          //color='textSecondary'
+          gutterBottom
+        >
           {post.message}
         </Typography>
       </CardContent>

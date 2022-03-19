@@ -1,14 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  createPost,
+  setCurrentPost,
+  updatePost,
+} from '../../redux/actions/postActions.js';
 
 import { TextField, Button, Typography, Paper } from '@material-ui/core';
 import FileBase from 'react-file-base64';
 import useStyles from './styles.js';
-import { useDispatch } from 'react-redux';
-import { createPost } from '../../redux/actions/postActions.js';
 
 const Form = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
+
+  // const [currentPost, setCurrentPost] = useState(
+  //   useSelector((state) => state.postsReducer.currentPost)
+  // );
+
+  const currentPost = useSelector((state) => state.postsReducer.currentPost);
 
   const [postData, setPostData] = useState({
     creator: '',
@@ -18,15 +28,37 @@ const Form = () => {
     selectedFile: '',
   });
 
+  useEffect(() => {
+    if (currentPost) {
+      setPostData(currentPost);
+    }
+  }, [currentPost]);
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    //need to add validation before sending post data
-    dispatch(createPost(postData));
+    if (currentPost) {
+      dispatch(updatePost(currentPost._id, postData));
+    } else {
+      //need to add validation before sending post data
+      dispatch(createPost(postData));
+    }
+
     //need to clear post data
+    clearForm();
   };
 
-  const clearForm = () => {};
+  const clearForm = () => {
+    setCurrentPost(null);
+    dispatch(setCurrentPost(null));
+    setPostData({
+      creator: '',
+      title: '',
+      message: '',
+      tags: '',
+      selectedFile: '',
+    });
+  };
 
   return (
     <Paper className={classes.paper}>
@@ -36,7 +68,9 @@ const Form = () => {
         className={`${classes.root} ${classes.form}`}
         onSubmit={handleSubmit}
       >
-        <Typography variant='h6'>Creating a Memory</Typography>
+        <Typography variant='h6'>
+          {currentPost ? 'Editing ' : 'Creating '} a Memory
+        </Typography>
 
         <TextField
           name='creator'

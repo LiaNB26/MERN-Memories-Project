@@ -6,9 +6,9 @@ import Post from './Post/Post';
 
 import useStyles from './styles.js';
 
-const Posts = () => {
+const Posts = ({ setCurrentId }) => {
   const classes = useStyles();
-  const posts = useSelector((state) => state.postsReducer);
+  const posts = useSelector((state) => state.postsReducer.posts);
 
   console.log(posts);
 

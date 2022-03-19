@@ -13,7 +13,7 @@ export const getPosts = () => async (dispatch) => {
 
     dispatch({ type: 'GET_ALL_POSTS', payload: data });
   } catch (error) {
-    console.log(error.message);
+    console.log(error);
   }
 };
 
@@ -25,6 +25,23 @@ export const createPost = (newPost) => async (dispatch) => {
 
     dispatch({ type: 'CREATE_POST', payload: data });
   } catch (error) {
-    console.log(error.message);
+    console.log(error);
+  }
+};
+
+export const updatePost = (id, updatedPost) => async (dispatch) => {
+  try {
+    const { data } = await axios.patch(`${url}/${id}`, updatedPost);
+    dispatch({ type: 'UPDATE_POST', payload: data });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const setCurrentPost = (currentPost) => (dispatch) => {
+  try {
+    dispatch({ type: 'SET_CURRENT_POST', payload: currentPost });
+  } catch (error) {
+    console.log(error);
   }
 };
