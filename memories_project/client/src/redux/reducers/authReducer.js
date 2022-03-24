@@ -1,9 +1,12 @@
-import { AUTH, LOGOUT } from '../types.js';
+import { GOOGLE_AUTH, LOGOUT, LOGIN, SIGNUP } from '../types.js';
 
 const authReducer = (state = { authData: null }, action) => {
   switch (action.type) {
-    case AUTH:
-      //   console.log(action.payload);
+    case GOOGLE_AUTH:
+    case LOGIN:
+    case SIGNUP:
+      localStorage.setItem('profile', JSON.stringify({ ...action.payload }));
+
       return {
         ...state,
         authData: action.payload,

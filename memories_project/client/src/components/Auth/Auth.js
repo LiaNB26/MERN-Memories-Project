@@ -15,19 +15,45 @@ import GoogleLogin from 'react-google-login';
 import useStyles from './authStyles.js';
 import Input from './Input.js';
 import Icon from './icon.js';
-import { login } from '../../redux/actions/authActions.js';
+import { googleLogin, login, signup } from '../../redux/actions/authActions.js';
+
+const initialState = {
+  firstName: '',
+  lastName: '',
+  email: '',
+  password: '',
+  confirmPassword: '',
+};
 
 const Auth = () => {
   const classes = useStyles();
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  //   const isSignUp = false;
+
   const [showPassword, setShowPassword] = useState(false);
   const [isSignUp, setIsSignUp] = useState(false);
+  const [formData, setFormData] = useState(initialState);
+  const [errorMessage, setErrorMessage] = useState('');
 
-  const handleSubmit = () => {};
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
-  const handleChange = () => {};
+    if (isSignUp) {
+      if (formData.password !== formData.confirmPassword) {
+        setErrorMessage('Paswwords do not match.');
+        setFormData({ ...formData, confirmPassword: '' });
+      } else {
+        setErrorMessage('');
+        dispatch(signup(formData, navigate));
+      }
+    } else {
+      dispatch(login(formData, navigate));
+    }
+  };
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
   const handleShowPassword = () => {
     setShowPassword((prevShowPassword) => !prevShowPassword);
@@ -42,7 +68,7 @@ const Auth = () => {
     const token = res?.tokenId;
     //const data = { result, token };
     try {
-      dispatch(login(result, token));
+      dispatch(googleLogin(result, token));
       navigate('/');
     } catch (error) {
       console.log(error);
@@ -95,9 +121,10 @@ const Auth = () => {
             {isSignUp && (
               <Input
                 name='confirmPassword'
-                label='Repeat Password'
+                label='Confirm Password'
                 handleChange={handleChange}
                 type='password'
+                error={errorMessage}
               />
             )}
           </Grid>
