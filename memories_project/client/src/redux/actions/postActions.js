@@ -10,11 +10,19 @@ import {
   SET_CURRENT_POST,
 } from '../types.js';
 
-const url = 'http://localhost:5000/posts';
+const API = axios.create({ baseURL: 'http://localhost:5000' });
+API.interceptors.request.use((req) => {
+  if (localStorage.getItem('profile')) {
+    const token = JSON.parse(localStorage.getItem('profile')).token;
+    req.headers.Authorization = `Bearer ${token}`;
+  }
+
+  return req;
+});
 
 export const getPosts = () => async (dispatch) => {
   try {
-    const response = await axios.get(url);
+    const response = await API.get('/posts');
     const { data } = response;
     //console.log(data);
 
@@ -26,7 +34,7 @@ export const getPosts = () => async (dispatch) => {
 
 export const createPost = (newPost) => async (dispatch) => {
   try {
-    const response = await axios.post(url, newPost);
+    const response = await API.post('/posts', newPost);
     const { data } = response;
     console.log(data);
 
@@ -38,7 +46,7 @@ export const createPost = (newPost) => async (dispatch) => {
 
 export const updatePost = (id, updatedPost) => async (dispatch) => {
   try {
-    const { data } = await axios.patch(`${url}/${id}`, updatedPost);
+    const { data } = await API.patch(`/posts/${id}`, updatedPost);
     dispatch({ type: UPDATE_POST, payload: data });
   } catch (error) {
     console.log(error);
@@ -47,7 +55,7 @@ export const updatePost = (id, updatedPost) => async (dispatch) => {
 
 export const deletePost = (id) => async (dispatch) => {
   try {
-    const { data } = await axios.delete(`${url}/${id}`);
+    const { data } = await API.delete(`/posts/${id}`);
     //console.log(data.message);
     dispatch({ type: DELETE_POST, payload: { id } });
   } catch (error) {
@@ -57,7 +65,7 @@ export const deletePost = (id) => async (dispatch) => {
 
 export const likePost = (id) => async (dispatch) => {
   try {
-    const { data } = await axios.patch(`${url}/${id}/likePost`);
+    const { data } = await API.patch(`/posts/${id}/likePost`);
     //console.log(data.message);
     dispatch({ type: LIKE_POST, payload: data });
   } catch (error) {

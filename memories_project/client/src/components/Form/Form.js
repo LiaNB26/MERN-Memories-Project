@@ -10,23 +10,20 @@ import { TextField, Button, Typography, Paper } from '@material-ui/core';
 import FileBase from 'react-file-base64';
 import useStyles from './styles.js';
 
+const initialState = {
+  title: '',
+  message: '',
+  tags: '',
+  selectedFile: '',
+};
+
 const Form = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  // const [currentPost, setCurrentPost] = useState(
-  //   useSelector((state) => state.postsReducer.currentPost)
-  // );
-
   const currentPost = useSelector((state) => state.postsReducer.currentPost);
-
-  const [postData, setPostData] = useState({
-    creator: '',
-    title: '',
-    message: '',
-    tags: '',
-    selectedFile: '',
-  });
+  const user = JSON.parse(localStorage.getItem('profile'));
+  const [postData, setPostData] = useState(initialState);
 
   useEffect(() => {
     if (currentPost) {
@@ -40,10 +37,12 @@ const Form = () => {
     console.log(postData);
 
     if (currentPost) {
-      dispatch(updatePost(currentPost._id, postData));
+      dispatch(
+        updatePost(currentPost._id, { ...postData, name: user?.result?.name })
+      );
     } else {
       //need to add validation before sending post data
-      dispatch(createPost(postData));
+      dispatch(createPost({ ...postData, name: user?.result?.name }));
     }
 
     //need to clear post data
@@ -53,14 +52,18 @@ const Form = () => {
   const clearForm = () => {
     setCurrentPost(null);
     dispatch(setCurrentPost(null));
-    setPostData({
-      creator: '',
-      title: '',
-      message: '',
-      tags: '',
-      selectedFile: '',
-    });
+    setPostData(initialState);
   };
+
+  if (!user?.result?.name) {
+    return (
+      <Paper className={classes.paper}>
+        <Typography variant='h6' align='center'>
+          Please sign in to create your own memories and like others' memories.
+        </Typography>
+      </Paper>
+    );
+  }
 
   return (
     <Paper className={classes.paper}>
@@ -73,17 +76,6 @@ const Form = () => {
         <Typography variant='h6'>
           {currentPost ? 'Editing ' : 'Creating '} a Memory
         </Typography>
-
-        <TextField
-          name='creator'
-          variant='outlined'
-          label='Creator'
-          fullWidth
-          value={postData.creator}
-          onChange={(e) =>
-            setPostData({ ...postData, creator: e.target.value })
-          }
-        />
 
         <TextField
           name='title'

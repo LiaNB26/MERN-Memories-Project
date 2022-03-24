@@ -43,7 +43,7 @@ const Post = ({ post }) => {
         title={post.title}
       />
       <div className={classes.overlay}>
-        <Typography variant='h6'>{post.creator}</Typography>
+        <Typography variant='h6'>{post.name}</Typography>
         <Typography variant='body2'>
           {moment(post.createdAt).fromNow()}
         </Typography>
@@ -64,7 +64,7 @@ const Post = ({ post }) => {
       </div>
       <Typography
         className={classes.title}
-        variant='h5'
+        variant='body1'
         //color='textSecondary'
         gutterBottom
       >
