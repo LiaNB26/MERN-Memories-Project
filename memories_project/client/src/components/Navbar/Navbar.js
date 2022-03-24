@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+
 import { AppBar, Avatar, Button, Toolbar, Typography } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 
@@ -9,7 +11,13 @@ import useStyles from './styles';
 const Navbar = () => {
   const classes = useStyles();
 
-  const user = null;
+  const [user, setUser] = useState(JSON.parse(localStorage.getItem('profile')));
+
+  useEffect(() => {
+    const token = user?.token;
+
+    setUser(JSON.parse(localStorage.getItem('profile')));
+  }, [user]);
 
   return (
     <AppBar className={classes.appBar} position='static' color='inherit'>
@@ -38,7 +46,7 @@ const Navbar = () => {
               alt={user.result.name}
               src={user.result.imageUrl}
             >
-              {user.result.charAt(0)}
+              {user.result.name}
             </Avatar>
             <Typography className={classes.userName} variant='h6'>
               {user.result.name}

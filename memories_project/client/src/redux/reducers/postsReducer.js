@@ -7,7 +7,7 @@ import {
   SET_CURRENT_POST,
 } from '../types.js';
 
-export default (state = { posts: [], currentPost: null }, action) => {
+const postsReducer = (state = { posts: [], currentPost: null }, action) => {
   switch (action.type) {
     case GET_ALL_POSTS:
       return {
@@ -41,3 +41,5 @@ export default (state = { posts: [], currentPost: null }, action) => {
       return state;
   }
 };
+
+export default postsReducer;

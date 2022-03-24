@@ -15,7 +15,11 @@ const Posts = ({ setCurrentId }) => {
   return (
     <>
       {!posts?.length ? (
-        <CircularProgress />
+        <div>
+          <div>
+            <CircularProgress size={80} color='secondary' />
+          </div>
+        </div>
       ) : (
         <Grid
           className={classes.mainContainer}
