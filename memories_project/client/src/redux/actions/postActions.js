@@ -1,7 +1,14 @@
 //import * as api from '../../api/api.js';
 import axios from 'axios';
 
-// Action creators
+import {
+  GET_ALL_POSTS,
+  CREATE_POST,
+  UPDATE_POST,
+  DELETE_POST,
+  LIKE_POST,
+  SET_CURRENT_POST,
+} from '../types.js';
 
 const url = 'http://localhost:5000/posts';
 
@@ -11,7 +18,7 @@ export const getPosts = () => async (dispatch) => {
     const { data } = response;
     //console.log(data);
 
-    dispatch({ type: 'GET_ALL_POSTS', payload: data });
+    dispatch({ type: GET_ALL_POSTS, payload: data });
   } catch (error) {
     console.log(error);
   }
@@ -23,7 +30,7 @@ export const createPost = (newPost) => async (dispatch) => {
     const { data } = response;
     console.log(data);
 
-    dispatch({ type: 'CREATE_POST', payload: data });
+    dispatch({ type: CREATE_POST, payload: data });
   } catch (error) {
     console.log(error);
   }
@@ -32,7 +39,7 @@ export const createPost = (newPost) => async (dispatch) => {
 export const updatePost = (id, updatedPost) => async (dispatch) => {
   try {
     const { data } = await axios.patch(`${url}/${id}`, updatedPost);
-    dispatch({ type: 'UPDATE_POST', payload: data });
+    dispatch({ type: UPDATE_POST, payload: data });
   } catch (error) {
     console.log(error);
   }
@@ -42,7 +49,7 @@ export const deletePost = (id) => async (dispatch) => {
   try {
     const { data } = await axios.delete(`${url}/${id}`);
     //console.log(data.message);
-    dispatch({ type: 'DELETE_POST', payload: { id } });
+    dispatch({ type: DELETE_POST, payload: { id } });
   } catch (error) {
     console.log(error);
   }
@@ -52,7 +59,7 @@ export const likePost = (id) => async (dispatch) => {
   try {
     const { data } = await axios.patch(`${url}/${id}/likePost`);
     //console.log(data.message);
-    dispatch({ type: 'LIKE_POST', payload: data });
+    dispatch({ type: LIKE_POST, payload: data });
   } catch (error) {
     console.log(error);
   }
@@ -60,7 +67,7 @@ export const likePost = (id) => async (dispatch) => {
 
 export const setCurrentPost = (currentPost) => (dispatch) => {
   try {
-    dispatch({ type: 'SET_CURRENT_POST', payload: currentPost });
+    dispatch({ type: SET_CURRENT_POST, payload: currentPost });
   } catch (error) {
     console.log(error);
   }
