@@ -20,6 +20,8 @@ export default makeStyles({
     borderRadius: '15px',
     height: '100%',
     position: 'relative',
+    // -webkit-box-shadow: 5px 5px 15px 5px #FFFFFF,
+    boxShadow: '2px 2px 15px 2px #FFFFFF',
   },
   overlay: {
     position: 'absolute',

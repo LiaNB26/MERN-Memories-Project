@@ -3,12 +3,10 @@ body {
   background-image: url('./images/main.jpg');
   background-repeat: no-repeat;
   background-size: cover;
-  width: 100%;
-  height: 100%;
-  overflow-x: hidden;
-  margin: 0;
-  padding: 0;
-  margin-bottom: 50px;
+  background-position: center center;
+  background-attachment: fixed;
+
+  font-family: 'Dancing Script', cursive;
 }
 
 /* Photo by <a href="https://unsplash.com/@timothyeberly?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Timothy Eberly</a> on <a href="https://unsplash.com/?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a> */
