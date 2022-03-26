@@ -34,7 +34,7 @@ const Form = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    console.log(postData);
+    //console.log(postData);
 
     if (currentPost) {
       dispatch(

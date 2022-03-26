@@ -10,7 +10,7 @@ const Posts = ({ setCurrentId }) => {
   const classes = useStyles();
   const posts = useSelector((state) => state.postsReducer.posts);
 
-  console.log(posts);
+  //console.log(posts);
 
   return (
     <>

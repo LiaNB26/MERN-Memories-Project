@@ -36,7 +36,7 @@ export const createPost = (newPost) => async (dispatch) => {
   try {
     const response = await API.post('/posts', newPost);
     const { data } = response;
-    console.log(data);
+    //console.log(data);
 
     dispatch({ type: CREATE_POST, payload: data });
   } catch (error) {
