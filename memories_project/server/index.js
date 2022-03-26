@@ -21,6 +21,8 @@ app.use(cors());
 app.use('/posts', postRoutes);
 app.use('/user', userRoutes);
 
+app.get('/', (req, res) => res.send('Hello to memories API'));
+
 mongoose
   .connect(CONNECTION_URL, {
     useNewUrlParser: true,

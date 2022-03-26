@@ -1,8 +1,9 @@
 import axios from 'axios';
 
 import { GOOGLE_AUTH, LOGIN, LOGOUT, SIGNUP } from '../types.js';
-// const url = 'http://localhost:5000/user';
-const API = axios.create({ baseURL: 'http://localhost:5000/user' });
+
+//'http://localhost:5000/user'
+const API = axios.create({ baseURL: process.env.REACT_APP_BASE_URL });
 
 export const googleLogin = (result, token) => async (dispatch) => {
   try {
@@ -18,7 +19,7 @@ export const googleLogin = (result, token) => async (dispatch) => {
 
 export const login = (formData, navigate) => async (dispatch) => {
   try {
-    const { data } = await API.post('/signin', formData);
+    const { data } = await API.post('/user/signin', formData);
 
     dispatch({ type: LOGIN, payload: data });
     navigate('/');
@@ -29,7 +30,7 @@ export const login = (formData, navigate) => async (dispatch) => {
 
 export const signup = (formData, navigate) => async (dispatch) => {
   try {
-    const { data } = await API.post('/signup', formData);
+    const { data } = await API.post('/user/signup', formData);
 
     dispatch({ type: SIGNUP, payload: data });
     navigate('/');

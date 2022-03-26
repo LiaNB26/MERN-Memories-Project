@@ -1,4 +1,3 @@
-//import * as api from '../../api/api.js';
 import axios from 'axios';
 
 import {
@@ -10,7 +9,9 @@ import {
   SET_CURRENT_POST,
 } from '../types.js';
 
-const API = axios.create({ baseURL: 'http://localhost:5000' });
+//'http://localhost:5000'
+const API = axios.create({ baseURL: process.env.REACT_APP_BASE_URL });
+
 API.interceptors.request.use((req) => {
   if (localStorage.getItem('profile')) {
     const token = JSON.parse(localStorage.getItem('profile')).token;
@@ -55,7 +56,7 @@ export const updatePost = (id, updatedPost) => async (dispatch) => {
 
 export const deletePost = (id) => async (dispatch) => {
   try {
-    const { data } = await API.delete(`/posts/${id}`);
+    await API.delete(`/posts/${id}`);
     //console.log(data.message);
     dispatch({ type: DELETE_POST, payload: { id } });
   } catch (error) {
